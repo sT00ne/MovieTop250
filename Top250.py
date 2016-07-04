@@ -2,6 +2,7 @@ import re
 import urllib.request
 import requests
 from bs4 import BeautifulSoup
+import time
 
 
 # 使用自带的库
@@ -47,6 +48,7 @@ def getmovie_requests(i, url):
     return i, moviedict
 
 
+start = time.clock()
 url = "https://movie.douban.com/top250"
 page = 0
 i = 1
@@ -54,8 +56,11 @@ movienames = {}
 while page < 226:
     pageurl = "?start=" + str(page) + "&filter="
     movieurl = url + pageurl
-    i, movienamedict = getmovie_requests(i, movieurl)
+    # i, movienamedict = getmovie_requests(i, movieurl)
+    i, movienamedict = getmovie(i, movieurl)
     movienames.update(movienamedict)
     page += 25
+end = time.clock()
 for (k, v) in movienames.items():
     print("dict[%s]=" % k, v)
+print("time:", end - start)
